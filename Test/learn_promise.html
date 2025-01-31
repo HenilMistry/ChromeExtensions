@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Promise in JS</title>
+</head>
+<body>
+    <h1>Even values are good. Odds are evil.</h1>
+    <h2 id="result">Result will appear here!</h2>
+    <input type="text" placeholder="enter your value" id="value">
+    <button id="btn">Submit</button>
+</body>
+<script>
+    const result = document.getElementById("result");
+    const value = document.getElementById("value");
+    const btn = document.getElementById("btn");
+
+    function something() {
+        return new Promise((resolve, reject) => {
+            let x = value.value;
+            // producing code...
+            if(x%2 == 0) { // even number...
+                resolve("Even group is best!");
+            } else { // odd number...
+                reject("Odds are evil, didn't I told you?");
+            }
+        });
+    }
+
+    btn.addEventListener("click", async () => {
+
+        await something().then(
+            (resolveReply) => {
+                result.innerText = resolveReply;
+            }, 
+            (rejectReply) => {
+                result.innerText = rejectReply;
+            }
+        );
+
+    });
+</script>
+</html>
