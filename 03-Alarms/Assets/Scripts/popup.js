@@ -22,20 +22,15 @@ function changeResult(newResult) {
 
 
 // PART - 2 ==========================================================
+const loadingDiv = document.getElementById("loading");
 document.getElementById("catImg").addEventListener("click",async () => {
-    // Injects the script into pages
-    console.log("Injected Script...");
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      function: showCats
-    });
-});
+    // Show loading animation
+    loadingDiv.style.display = "block";
 
-function showCats() {
     let newImageURL = "https://your-image-url.com/image.jpg"; // Change this to your desired image
     let url = `https://api.thecatapi.com/v1/images/search`;
     let api_key = `live_XRI09CGiRiJkEw7xtP6yQ0BwYQxquzANxlgalUYjWyvHPUY5yi9PPUNId7y7zijA`;
+
     fetch(url,{headers: {
         'x-api-key': api_key
       }})
@@ -43,7 +38,7 @@ function showCats() {
         console.log("got the response");
         return response.json();
     })
-    .then((data) => {
+    .then(async (data) => {
         let imagesData = data;
         imagesData.map(function(imageData) {
         
@@ -51,12 +46,25 @@ function showCats() {
         
         });
         console.log("New URL : "+newImageURL);
-        document.querySelectorAll("img").forEach(img => {
-            img.src = newImageURL;
-            img.srcset = newImageURL; // Ensures high-resolution images are replaced too
+        // Show loading animation
+        loadingDiv.style.display = "none";
+         // Injects the script into pages
+        console.log("Injected Script...");
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        function: showCats,
+        args: [newImageURL]
         });
     })
     .catch(function(error) {
      console.log(error);
+    });
+});
+
+function showCats(newImageURL) {
+    document.querySelectorAll("img").forEach(img => {
+        img.src = newImageURL;
+        img.srcset = newImageURL; // Ensures high-resolution images are replaced too
     });
 }
