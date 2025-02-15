@@ -1,0 +1,15 @@
+{
+    "name": "CatFact",
+    "description": "Random cat fact in your way!",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": ["activeTab", "scripting"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+        "service_worker": "./Assets/Scripts/background.js"
+    },
+    "action": {
+        "default_title": "Click to reload images",
+        "default_icon": "./Assets/Imgs/logo.png"
+    }
+  }
