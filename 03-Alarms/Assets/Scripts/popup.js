@@ -1,3 +1,37 @@
+// PART - 1 ==========================================================
+document.getElementById("btn").addEventListener("click",async () => {
+    changeResult(await fetchRandomCatFact());
+});
+
+// function to fetch the random cat fact...
+async function fetchRandomCatFact () {
+    try {
+        const response = await fetch("https://catfact.ninja/fact");
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("❌ Failed to fetch quote:", error);
+        return "Error! Fetching data.";
+    }
+}
+
+// function to change the result text...
+function changeResult(newResult) {
+    document.getElementById("result").innerText = newResult.fact;
+}
+
+
+// PART - 2 ==========================================================
+document.getElementById("catImg").addEventListener("click",async () => {
+    // Injects the script into pages
+    console.log("Injected Script...");
+    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    chrome.scripting.executeScript({
+      target: { tabId: tab.id },
+      function: showCats
+    });
+});
+
 function showCats() {
     let newImageURL = "https://your-image-url.com/image.jpg"; // Change this to your desired image
     let url = `https://api.thecatapi.com/v1/images/search`;
@@ -25,35 +59,4 @@ function showCats() {
     .catch(function(error) {
      console.log(error);
     });
-}
-
-document.getElementById("btn").addEventListener("click",async () => {
-    changeResult(await fetchRandomCatFact());
-});
-
-document.getElementById("catImg").addEventListener("click",async () => {
-    // Injects the script into pages
-    console.log("Injected Script...");
-    let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      function: showCats
-    });
-});
-
-// function to fetch the random cat fact...
-async function fetchRandomCatFact () {
-    try {
-        const response = await fetch("https://catfact.ninja/fact");
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        console.error("❌ Failed to fetch quote:", error);
-        return "Error! Fetching data.";
-    }
-}
-
-// function to change the result text...
-function changeResult(newResult) {
-    document.getElementById("result").innerText = newResult.fact;
 }
