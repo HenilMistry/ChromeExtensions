@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Sync & To-Do List",
+    "version": "1.0",
+    "description": "A To-Do List extension that stores tasks and syncs them across devices.",
+    "permissions": [
+      "storage"
+    ],
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": "./Asset/Imgs/logo.png"
+    }
+  }
+  
