@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Weather Dashboard",
+    "version": "1.0",
+    "description": "Get real-time weather data with alerts",
+    "permissions": ["alarms", "storage", "notifications"],
+    "background": {
+      "service_worker": "Assets/Scripts/background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "Assets/Imgs/logo.png"
+    }
+  }
